@@ -77,11 +77,16 @@ export default defineComponent({
   margin: 1rem;
 }
 .my-text {
-  display: inline-block;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
   word-wrap: break-word;
   overflow: hidden;
-  max-height: 2.4em; /* (Number of lines you want visible) * (line-height) */
-  line-height: 2.4em;
+  max-height: calc(
+    1.2em + 10px
+  ); /* (Number of lines you want visible) * (line-height) */
+  line-height: 1.2em;
   text-align: center;
 }
 </style>
