@@ -7,7 +7,6 @@
   "private": true,
   "scripts": {
     "build": "yarn quasar build",
-    "start": "node server.js",
     "heroku-postbuild": "yarn && yarn build",
     "lint": "eslint --ext .js,.vue ./",
     "format": "prettier --write \"**/*.{js,vue,scss,html,md,json}\" --ignore-path .gitignore",
