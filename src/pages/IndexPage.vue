@@ -76,4 +76,12 @@ export default defineComponent({
   width: 120px;
   margin: 1rem;
 }
+.my-text {
+  display: inline-block;
+  word-wrap: break-word;
+  overflow: hidden;
+  max-height: 2.4em; /* (Number of lines you want visible) * (line-height) */
+  line-height: 2.4em;
+  text-align: center;
+}
 </style>
