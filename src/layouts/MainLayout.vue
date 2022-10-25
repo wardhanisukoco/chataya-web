@@ -11,7 +11,9 @@
           @click="toggleLeftDrawer"
         /> -->
 
-        <q-toolbar-title> Chataya </q-toolbar-title>
+        <q-toolbar-title>
+          <a class="logo" href="/">Chataya</a>
+        </q-toolbar-title>
         <!-- <div>Quasar v{{ $q.version }}</div> -->
       </q-toolbar>
     </q-header>
@@ -107,3 +109,10 @@ export default defineComponent({
   },
 });
 </script>
+<style lang="sass" scoped>
+.logo
+  letter-spacing: 3px
+  font-weight: 900
+  color: white
+  text-decoration: none
+</style>
