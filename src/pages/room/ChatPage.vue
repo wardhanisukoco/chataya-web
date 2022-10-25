@@ -52,7 +52,7 @@ export default defineComponent({
     const baseURL =
       process.env.NODE_ENV == "development"
         ? "ws://localhost:3000/cable"
-        : "ws://chataya-api.herokuapp.com/cable";
+        : "wss://chataya-api.herokuapp.com/cable";
     const cable = ActionCable.createConsumer(baseURL);
 
     const loadData = () => {
