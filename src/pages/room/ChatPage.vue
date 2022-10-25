@@ -23,8 +23,12 @@
           v-model="content"
           standout="bg-white text-black"
         >
-          <template v-slot:append>
+          <!-- <template v-slot:append>
             <q-icon name="send" size="2rem" />
+          </template> -->
+
+          <template v-slot:after>
+            <q-btn @click="onSubmit" round dense flat icon="send" />
           </template>
         </q-input>
       </q-form>
