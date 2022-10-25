@@ -48,7 +48,12 @@ export default defineComponent({
     const messages = ref([]);
     const content = ref(null);
     const sessionId = ref(null);
-    const cable = ActionCable.createConsumer("ws://localhost:3000/cable");
+
+    const baseURL =
+      process.env.NODE_ENV == "development"
+        ? "ws://localhost:3000/cable"
+        : "ws://chataya-api.herokuapp.com/cable";
+    const cable = ActionCable.createConsumer(baseURL);
 
     const loadData = () => {
       api
