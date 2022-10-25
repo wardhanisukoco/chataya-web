@@ -83,8 +83,9 @@ export default defineComponent({
   text-overflow: ellipsis;
   word-wrap: break-word;
   overflow: hidden;
+  height: calc(calc(2.4em + 16px));
   max-height: calc(
-    1.2em + 10px
+    calc(2.4em + 16px)
   ); /* (Number of lines you want visible) * (line-height) */
   line-height: 1.2em;
   text-align: center;
