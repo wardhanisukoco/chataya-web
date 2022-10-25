@@ -28,7 +28,15 @@
           </template> -->
 
           <template v-slot:after>
-            <q-btn @click="onSubmit" size="1rem" round dense flat icon="send" />
+            <q-btn
+              @click="onSubmit"
+              size="1.2rem"
+              round
+              dense
+              flat
+              color="white"
+              icon="send"
+            />
           </template>
         </q-input>
       </q-form>
