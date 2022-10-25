@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex flex-center">
     <div class="row">
-      <div class="col-12 col-md">
+      <div class="col-6 col-md my-box">
         <q-card class="my-card" v-ripple @click="gotoCreateRoom">
           <q-card-section class="row justify-center">
             <div>
@@ -13,7 +13,11 @@
           </q-card-actions>
         </q-card>
       </div>
-      <div v-for="(room, index) in data" :key="index" class="col-12 col-md">
+      <div
+        v-for="(room, index) in data"
+        :key="index"
+        class="col-6 col-md my-box"
+      >
         <q-card class="my-card" @click="gotoMessage(room.id)" v-ripple>
           <q-card-section class="row justify-center">
             <q-icon name="folder" size="4em" color="grey" />
@@ -74,7 +78,10 @@ export default defineComponent({
 <style lang="scss" scoped>
 .my-card {
   width: 120px;
-  margin: 1rem;
+  margin: auto;
+}
+.my-box {
+  padding: 1rem;
 }
 .my-text {
   display: -webkit-box;
