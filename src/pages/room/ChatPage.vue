@@ -78,7 +78,6 @@ export default defineComponent({
         })
         .then((response) => {
           content.value = null;
-          loadData();
           $q.notify({
             color: "positive",
             position: "top",
