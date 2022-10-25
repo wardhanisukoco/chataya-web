@@ -6,7 +6,9 @@
   "author": "Wardhani Sukoco <wardhanisukoco@gmail.com>",
   "private": true,
   "scripts": {
-    "heroku-postbuild": "yarn && yarn quasar build",
+    "build": "yarn quasar build",
+    "start": "node server.js",
+    "heroku-postbuild": "yarn && yarn build",
     "lint": "eslint --ext .js,.vue ./",
     "format": "prettier --write \"**/*.{js,vue,scss,html,md,json}\" --ignore-path .gitignore",
     "test": "echo \"No test specified\" && exit 0"
