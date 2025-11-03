@@ -63,7 +63,7 @@ export default defineComponent({
 
     const baseURL =
       process.env.NODE_ENV == "development"
-        ? "ws://localhost:3000/cable"
+        ? "ws://localhost:3333/cable"
         : "wss://chataya-api.herokuapp.com/cable";
     const cable = ActionCable.createConsumer(baseURL);
 
@@ -84,6 +84,9 @@ export default defineComponent({
         });
     };
     const onSubmit = () => {
+      if (!content.value) {
+        return;
+      }
       api
         .post(`/rooms/${id}/messages`, {
           content: content.value,
