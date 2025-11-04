@@ -6,7 +6,7 @@
         v-for="message in messages"
         :key="message.id"
         :text="[message.content]"
-        :sent="message.session_id == sessionId"
+        :sent="message.sessionId == sessionId"
       />
     </div>
     <!-- </div> -->
@@ -49,7 +49,8 @@ import { defineComponent, ref, onMounted } from "vue";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useRoute } from "vue-router";
-import ActionCable from "actioncable";
+// import ActionCable from "actioncable";
+import { io } from "socket.io-client";
 
 export default defineComponent({
   name: "IndexPage",
@@ -61,18 +62,26 @@ export default defineComponent({
     const content = ref(null);
     const sessionId = ref(null);
 
-    const baseURL =
+    // const baseURL =
+    //   process.env.NODE_ENV == "development"
+    //     ? "ws://localhost:3333/cable"
+    //     : "wss://chataya-api.herokuapp.com/cable";
+    // const cable = ActionCable.createConsumer(baseURL);
+
+    const socketURL =
       process.env.NODE_ENV == "development"
-        ? "ws://localhost:3333/cable"
-        : "wss://chataya-api.herokuapp.com/cable";
-    const cable = ActionCable.createConsumer(baseURL);
+        ? "http://localhost:3333"
+        : "wss://chataya.prod";
+
+    // Connect to server
+    const socket = io(socketURL);
 
     const loadData = () => {
       api
         .get(`/rooms/${id}/messages`)
         .then((response) => {
           messages.value = response.data.messages.reverse();
-          sessionId.value = response.data.session_id;
+          sessionId.value = response.data.sessionId;
         })
         .catch(() => {
           $q.notify({
@@ -112,30 +121,55 @@ export default defineComponent({
       loadData();
     });
 
-    cable.subscriptions.create(
-      {
-        channel: "RoomChannel",
-        room: id,
-      },
-      {
-        connected: () => {
-          // console.log("connected");
-        },
-        disconnected: () => {
-          // console.log("disconnected");
-        },
-        received: (data) => {
-          messages.value.push(data.message);
-          if (sessionId.value != data.message.session_id) {
-            $q.notify({
-              color: "positive",
-              position: "top",
-              message: "New message.",
-            });
-          }
-        },
+    // cable.subscriptions.create(
+    //   {
+    //     channel: "RoomChannel",
+    //     room: id,
+    //   },
+    //   {
+    //     connected: () => {
+    //       // console.log("connected");
+    //     },
+    //     disconnected: () => {
+    //       // console.log("disconnected");
+    //     },
+    //     received: (data) => {
+    //       messages.value.push(data.message);
+    //       if (sessionId.value != data.message.session_id) {
+    //         $q.notify({
+    //           color: "positive",
+    //           position: "top",
+    //           message: "New message.",
+    //         });
+    //       }
+    //     },
+    //   }
+    // );
+
+    // Subscribe to room (mimicking Action Cable)
+    socket.emit("subscribe", { channel: "RoomChannel", room: id });
+
+    // Connected callback
+    socket.on("connected", () => {
+      // console.log("connected")
+    });
+
+    // Disconnected callback
+    socket.on("disconnected", () => {
+      // console.log("disconnected")
+    });
+
+    // Received callback
+    socket.on("received", (data) => {
+      messages.value.push(data.message);
+      if (sessionId.value != data.message.sessionId) {
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "New message.",
+        });
       }
-    );
+    });
     return { messages, sessionId, content, loadData, onSubmit };
   },
 });
